@@ -14,7 +14,6 @@ public class KafkaProducer {
 		//props.put("zk.connect", "192.168.203.130:2181");
         props.put("metadata.broker.list", "192.168.203.130:9092");
         props.put("serializer.class", "kafka.serializer.StringEncoder");
-        //props.put("partitioner.class", "example.producer.SimplePartitioner");
         props.put("request.required.acks", "-1");
 		
 		

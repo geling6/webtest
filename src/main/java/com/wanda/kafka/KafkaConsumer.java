@@ -15,7 +15,7 @@ public class KafkaConsumer {
 	public static void main(String[] args) {
 		Properties props = new Properties();
 		props.put("zookeeper.connect", "192.168.203.130:2181");
-		props.put("group.id", 1);
+		props.put("group.id", "test-consumer-group");
 		
 		ConsumerConfig consumerConfig = new ConsumerConfig(props);
 		ConsumerConnector consumerConnector = Consumer.createJavaConsumerConnector(consumerConfig);
