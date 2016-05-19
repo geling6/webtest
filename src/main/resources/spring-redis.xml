@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="10"/>
+        <property name="maxTotal" value="15"/>
+        <property name="maxWaitMillis" value="-1"/>
+        <property name="testOnBorrow" value="true"/>
+    </bean>
+    <bean id="host1" class="redis.clients.jedis.HostAndPort">
+    	<constructor-arg name="host" value="192.168.203.131"/>
+    	<constructor-arg name="port" value="6379"/>
+    </bean>
+    <bean id="host2" class="redis.clients.jedis.HostAndPort">
+    	<constructor-arg name="host" value="192.168.203.130"/>
+    	<constructor-arg name="port" value="6379"/>
+    </bean>
+    <bean id="host3" class="redis.clients.jedis.HostAndPort">
+    	<constructor-arg name="host" value="192.168.203.128"/>
+    	<constructor-arg name="port" value="6379"/>
+    </bean>
+    <bean id="host4" class="redis.clients.jedis.HostAndPort">
+    	<constructor-arg name="host" value="192.168.203.132"/>
+    	<constructor-arg name="port" value="6379"/>
+    </bean>
+    <bean id="host5" class="redis.clients.jedis.HostAndPort">
+    	<constructor-arg name="host" value="192.168.203.134"/>
+    	<constructor-arg name="port" value="6379"/>
+    </bean>
+    <bean id="host6" class="redis.clients.jedis.HostAndPort">
+    	<constructor-arg name="host" value="192.168.203.135"/>
+    	<constructor-arg name="port" value="6379"/>
+    </bean>
+    <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster" destroy-method="close">
+        <constructor-arg name="nodes">
+        	<set>
+        		<ref bean="host1"/>
+        		<ref bean="host2"/>
+        		<ref bean="host3"/>
+        		<ref bean="host4"/>
+        		<ref bean="host5"/>
+        		<ref bean="host6"/>
+        	</set>
+        </constructor-arg>
+        <constructor-arg name="timeout" value="6000"/>
+        <constructor-arg name="poolConfig">
+        	<ref bean="jedisPoolConfig"/>
+        </constructor-arg>
+    </bean>
+</beans>

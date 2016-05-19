@@ -151,7 +151,7 @@ public class SendUtil {
   		RestTemplate restTemplate = new RestTemplate();
   		try {
   		    String strObject = restTemplate.postForObject(url, requestEntity, String.class);
-  		    System.out.println("����json: " + strObject);
+  		    System.out.println("接受json: " + strObject);
   		}catch (HttpClientErrorException e) {
   		    System.out.println(e.getResponseBodyAsString());
   		    throw e;

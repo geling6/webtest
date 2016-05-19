@@ -1,5 +1,8 @@
 package com.wanda.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wanda.bean.User;
 import com.wanda.utils.SendUtil;
@@ -13,15 +16,13 @@ public class AOPControllerTest {
 	public  static void testAop()throws Exception{
 		ObjectMapper mapper = new ObjectMapper();
 		
-		User user = new User();
-		user.setId(2);
-		user.setUsername("xiaoming");
-		user.setPassword("abcdefg");
-		
-		String userStr = mapper.writeValueAsString(user);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("id", 4L);
+		map.put("username", "xiaolig");
+		map.put("password", "no fuck");
 		
 		String url = "http://localhost:8080/webtest/aop/user";
-		SendUtil.postResponse(url, null, userStr);
+		SendUtil.postResponse(url, null, map);
 	}
 
 }
