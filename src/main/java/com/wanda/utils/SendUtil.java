@@ -24,7 +24,7 @@ public class SendUtil {
      * @param map 要拼接的参数
      * @param method
      */
-    public static void sendesponse(String url, Map<String, Object> map, HttpMethod method) {
+    public static void sendRequestWithParam(String url, Map<String, Object> map, HttpMethod method) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -60,7 +60,7 @@ public class SendUtil {
      * @param method
      * @param variables 放到body里的参数
      */
-    public static void sendRequest(String url, Map<String, Object> map, HttpMethod method,Map<String,Object> variables) {
+    public static void sendRequestWithParamAndBody(String url, Map<String, Object> map, HttpMethod method,Object variables) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -91,7 +91,7 @@ public class SendUtil {
     }
     
     /**
-     * @desc 发送的公共方法，支持各种http方法。参数的发送格式是拼接在url后边的
+     * @desc 发送的公共方法，支持各种http方法。发送的参数是json格式,拼接在url后边的
      * @param url
      * @param map 要拼接的参数
      * @param method
