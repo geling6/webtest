@@ -1,7 +1,7 @@
 package com.geling.thread;
 
 /**
- * ThreadLocalÀàÖ÷Òª´¦ÀíÓëÏß³Ì°ó¶¨µÄÊı¾İ
+ * ThreadLocalç±»ä¸»è¦å¤„ç†ä¸çº¿ç¨‹ç»‘å®šçš„æ•°æ®
  */
 public class ThreadLocalTest {
 
@@ -11,10 +11,10 @@ public class ThreadLocalTest {
 		new Thread(new Runnable(){
 			@Override
 			public void run() {
-				local.set(12);//Êı¾İÔÚµ±Ç°Ïß³ÌµÄËùÓĞ·½·¨¼ä¹²Ïí
+				local.set(12);//æ•°æ®åœ¨å½“å‰çº¿ç¨‹çš„æ‰€æœ‰æ–¹æ³•é—´å…±äº«
 				getValue();
 			}
-		},"Ïß³Ì1").start();
+		},"çº¿ç¨‹1").start();
 		
 		new Thread(new Runnable(){
 			@Override
@@ -22,7 +22,7 @@ public class ThreadLocalTest {
 				local.set(22);
 				getValue();
 			}
-		},"Ïß³Ì2").start();
+		},"çº¿ç¨‹2").start();
 	}
 	private static void getValue(){
 		int value = local.get();

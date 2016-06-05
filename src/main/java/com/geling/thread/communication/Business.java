@@ -1,14 +1,14 @@
 package com.geling.thread.communication;
 
 /**
- * Ïß³ÌµÄËø£¬Ïß³ÌµÄÍ¬²½·½Ê½¶¼ÊÇ·â×°ÔÚÏß³ÌÒªÖ´ĞĞµÄ´úÂëÀï
+ * çº¿ç¨‹çš„é”ï¼Œçº¿ç¨‹çš„åŒæ­¥æ–¹å¼éƒ½æ˜¯å°è£…åœ¨çº¿ç¨‹è¦æ‰§è¡Œçš„ä»£ç é‡Œ
  */
 class Business {
 	boolean flag = true;
 	public synchronized void sub(int i){
-		while(!flag){//´Ë´¦ÓÃwhile£¬·ÀÖ¹¡°Î±»½ĞÑ¡±
+		while(!flag){//æ­¤å¤„ç”¨whileï¼Œé˜²æ­¢â€œä¼ªå”¤é†’â€
 			try{
-				this.wait();//wait()Ò»¶¨Òª·Åµ½synchronizedÀïÃæ		
+				this.wait();//wait()ä¸€å®šè¦æ”¾åˆ°synchronizedé‡Œé¢	
 			}catch(InterruptedException e){
 				e.printStackTrace();
 			}

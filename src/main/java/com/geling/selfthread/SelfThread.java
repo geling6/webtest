@@ -1,7 +1,7 @@
 package com.geling.selfthread;
 
 /**
- * ¼Ì³Ğ×ÓThreadÀà
+ * ç»§æ‰¿å­Threadç±»
  */
 class MyThread extends Thread{
 	public MyThread(String name){
@@ -21,7 +21,7 @@ class MyThread extends Thread{
 }
 
 /**
- * ÊµÏÖRunnable½Ó¿Ú
+ * å®ç°Runnableæ¥å£
  */
 class MyRunnable implements Runnable{
 	
@@ -41,16 +41,16 @@ class MyRunnable implements Runnable{
 public class SelfThread {
 
 	public static void main(String[] args) {
-		//¼Ì³Ğ×ÔThreadÀàµÄÆô¶¯
-		MyThread myThread = new MyThread("×ÓÏß³Ì1");
+		//ç»§æ‰¿è‡ªThreadç±»çš„å¯åŠ¨
+		MyThread myThread = new MyThread("çº¿ç¨‹1");
 		myThread.start();
 		
-		//ÊµÏÖRunnable½Ó¿ÚµÄÆô¶¯
+		//å®ç°Runnableæ¥å£çš„å¯åŠ¨
 		MyRunnable myRunnable = new MyRunnable();
-		Thread thread = new Thread(myRunnable,"×ÓÏß³Ì2");
+		Thread thread = new Thread(myRunnable,"çº¿ç¨‹2");
 		thread.start();
 		
-		//Ö÷Ïß³Ì
+		//ä¸»çº¿ç¨‹
 		while(true){
 			try{
 				Thread.sleep(5000);

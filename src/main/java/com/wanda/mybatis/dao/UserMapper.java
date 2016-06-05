@@ -1,6 +1,7 @@
 package com.wanda.mybatis.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Select;
 
@@ -12,4 +13,10 @@ public interface UserMapper {
 	
 	@Select("select * from user")
 	List<User> selectUsers();
+	
+	Integer getIdByName(String username);
+	
+	Map<String,Object> selectMapById(Integer id);
+	
+	List<Map<String,Object>> selectMapByStatus(int status);
 }

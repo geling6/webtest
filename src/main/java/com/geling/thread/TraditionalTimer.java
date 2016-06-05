@@ -7,7 +7,7 @@ import java.util.TimerTask;
 public class TraditionalTimer {
 	public static void main(String[] args) {
 		
-		//10ÃëºóÖ´ĞĞµÄÈÎÎñ,ÒÔºóÃ¿¸ô3ÃëÖ´ĞĞÒ»´Î
+		//10ç§’åæ‰§è¡Œçš„ä»»åŠ¡,ä»¥åæ¯éš”3ç§’æ‰§è¡Œä¸€æ¬¡
 		new Timer().schedule(new TimerTask() {
 			
 			@Override
@@ -16,7 +16,7 @@ public class TraditionalTimer {
 			}
 		}, 10000,3000);
 		
-		//Ö÷·½·¨Ö´ĞĞ
+		//ä¸»æ–¹æ³•æ‰§è¡Œ
 		while(true){
 			System.out.println(new Date().getSeconds());
 			try{

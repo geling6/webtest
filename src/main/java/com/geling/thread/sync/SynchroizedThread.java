@@ -4,10 +4,10 @@ public class SynchroizedThread {
 
 	public static void main(String[] args) {
 		
-		//ÒªÖ´ĞĞµÄ¶ÔÏó
+		//è¦æ‰§è¡Œçš„å¯¹è±¡
 		final Outputer output = new Outputer();
 		
-		//µÚÒ»¸öÏß³Ì
+		//ç¬¬ä¸€ä¸ªçº¿ç¨‹
 		new Thread(new Runnable(){
 			@Override
 			public void run() {
@@ -20,9 +20,9 @@ public class SynchroizedThread {
 					output.output("tongleiyan");
 				}
 			}
-		},"Ïß³Ì1").start();
+		},"çº¿ç¨‹1").start();
 		
-		//µÚ¶ş¸öÏß³Ì
+		//ç¬¬äºŒä¸ªçº¿ç¨‹
 		new Thread(new Runnable(){
 			@Override
 			public void run() {

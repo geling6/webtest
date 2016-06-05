@@ -3,7 +3,7 @@ package com.geling.thread.sync;
 import org.springframework.util.StringUtils;
 
 /**
- * Êµ¼Ê¶àÏß³ÌÒªÖ´ĞĞµÄ´úÂë¡£Ò»°ã¶¼ÊÇµ¥¶ÀÌá³öÀ´×ö¸öÀà
+ * å®é™…å¤šçº¿ç¨‹è¦æ‰§è¡Œçš„ä»£ç ã€‚ä¸€èˆ¬éƒ½æ˜¯å•ç‹¬æå‡ºæ¥åšä¸ªç±»
  */
 public class Outputer {
 	public synchronized void output(String name){
@@ -17,7 +17,7 @@ public class Outputer {
 	}
 	
 	public void output2(String name){
-		synchronized(Outputer.class){//output2ºÍoutput3·½·¨´ïµ½Í¬²½Ğ§¹û
+		synchronized(Outputer.class){//output2å’Œoutput3æ–¹æ³•è¾¾åˆ°åŒæ­¥æ•ˆæœ
 			if(!StringUtils.isEmpty(name)){
 				int len = name.length();
 				for(int i=0;i<len;i++){

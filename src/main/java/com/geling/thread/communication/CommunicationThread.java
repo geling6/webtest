@@ -10,7 +10,7 @@ public class CommunicationThread {
 					business.sub(i);
 				}
 			}
-		},"线程1").start();
+		},"绾跨▼1").start();
 		
 		new Thread(new Runnable(){
 			@Override
@@ -19,6 +19,6 @@ public class CommunicationThread {
 					business.main(i);
 				}
 			}
-		},"线程2").start();
+		},"绾跨▼2").start();
 	}
 }

@@ -2,6 +2,7 @@ package com.wanda.mybatis.bean;
 
 import java.util.Date;
 
+//@Alias("myuser")
 public class User {
 	private Integer id;
 	private String account;
