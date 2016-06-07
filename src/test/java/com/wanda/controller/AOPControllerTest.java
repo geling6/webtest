@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wanda.bean.User;
 import com.wanda.utils.SendUtil;
+import com.wanda.web.bean.User;
 
 public class AOPControllerTest {
 

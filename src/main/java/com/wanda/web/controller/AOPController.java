@@ -1,4 +1,4 @@
-package com.wanda.controller;
+package com.wanda.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wanda.bean.User;
+import com.wanda.web.bean.User;
 
 @Controller
 @RequestMapping(value = "/aop",method = RequestMethod.POST)

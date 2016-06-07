@@ -7,6 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.wanda.mybatis.bean.User;
+import com.wanda.mybatis.dao.UserMapper;
+
 public class MybatisTest2 {
 
 	public static void main(String[] args) throws Exception{
@@ -16,7 +19,17 @@ public class MybatisTest2 {
 		
 		SqlSession session = sqlSessionFactory.openSession();
 		try {
-			//Map<Integer,String> map = session.selectMap("select id,user_name from user", "id");
+			User user = new User();
+			user.setAccount("tongleiyan");
+			user.setUserName("仝磊燕");
+			user.setPassword("fucktongleiyan");
+			user.setStatus(2);
+			user.setEmail("tongleiyan@fuck.com");
+			UserMapper userMapper = session.getMapper(UserMapper.class);
+			
+			int count = userMapper.insertUser(user);
+			session.commit();
+			System.out.println(count);
 		} finally {
 		  session.close();
 		}

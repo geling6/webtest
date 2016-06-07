@@ -1,4 +1,4 @@
-package com.wanda.interceptor;
+package com.wanda.web.interceptor;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

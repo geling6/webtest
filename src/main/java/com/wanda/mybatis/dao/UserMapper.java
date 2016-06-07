@@ -19,4 +19,6 @@ public interface UserMapper {
 	Map<String,Object> selectMapById(Integer id);
 	
 	List<Map<String,Object>> selectMapByStatus(int status);
+	
+	int insertUser(User user);
 }
