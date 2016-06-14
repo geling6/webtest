@@ -3,6 +3,7 @@ package com.wanda.mybatis.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.wanda.mybatis.bean.User;
@@ -21,4 +22,6 @@ public interface UserMapper {
 	List<Map<String,Object>> selectMapByStatus(int status);
 	
 	int insertUser(User user);
+	
+	int updateUsers(@Param("users")List<User> users);
 }

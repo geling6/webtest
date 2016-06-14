@@ -39,4 +39,63 @@
   	insert into user (id,account,user_name,password,email,status,create_time,update_time)
   	value(#{id},#{account},#{userName},#{password},#{email},#{status},#{createTime},#{updateTime})
   </insert>
+  
+  <update id="updateUsers" parameterType="java.util.List">
+  	UPDATE user
+		<trim prefix="set" suffix="" prefixOverrides="" suffixOverrides=",">
+            <trim prefix="account = case" suffix="end,">
+	            <foreach collection="users" item="i" index="index">
+		            <if test="i.account != null">
+		            	when id = #{i.id} then #{i.account}
+		            </if>
+	            </foreach>
+            </trim>
+            <trim prefix="password = case" suffix="end,">
+	            <foreach collection="users" item="i" index="index">
+		            <if test="i.password != null">
+		            	when id=#{i.id} then #{i.password}
+		            </if>
+	            </foreach>
+            </trim>
+            <trim prefix="user_name = case" suffix="end,">
+	            <foreach collection="users" item="i" index="index">
+		            <if test="i.userName != null">
+		            	when id=#{i.id} then #{i.userName}
+		            </if>
+	            </foreach>
+            </trim>
+            <trim prefix="email = case" suffix="end,">
+	            <foreach collection="users" item="i" index="index">
+		            <if test="i.email != null">
+		            	when id=#{i.id} then #{i.email}
+		            </if>
+	            </foreach>
+            </trim>
+            <trim prefix="status = case" suffix="end,">
+	            <foreach collection="users" item="i" index="index">
+		            <if test="i.status != null">
+		            	when id=#{i.id} then #{i.status}
+		            </if>
+	            </foreach>
+            </trim>
+            <trim prefix="create_time = case" suffix="end,">
+	            <foreach collection="users" item="i" index="index">
+		            <if test="i.createTime != null">
+		            	when id=#{i.id} then #{i.createTime}
+		            </if>
+	            </foreach>
+            </trim>
+            <trim prefix="update_time = case" suffix="end,">
+	            <foreach collection="users" item="i" index="index">
+		            <if test="i.updateTime != null">
+		            	when id=#{i.id} then #{i.updateTime}
+		            </if>
+	            </foreach>
+            </trim>
+		</trim>
+		where
+        <foreach collection="users" separator="or" item="i" index="index" >
+        	id=#{i.id}
+        </foreach>
+  </update>
 </mapper>

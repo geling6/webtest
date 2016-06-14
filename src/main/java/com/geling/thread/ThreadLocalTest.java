@@ -6,7 +6,7 @@ package com.geling.thread;
 public class ThreadLocalTest {
 
 	
-	private static ThreadLocal<Integer> local = new ThreadLocal<>();
+	private static ThreadLocal<Integer> local = new ThreadLocal<Integer>();
 	public static void main(String[] args) {
 		new Thread(new Runnable(){
 			@Override

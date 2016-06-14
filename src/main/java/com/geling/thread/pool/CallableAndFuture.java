@@ -35,7 +35,7 @@ public class CallableAndFuture {
 		exec.shutdown();
 		//批量任务
 		ExecutorService exec2 = Executors.newFixedThreadPool(3);
-		CompletionService<Integer> completionService = new ExecutorCompletionService<>(exec2);
+		CompletionService<Integer> completionService = new ExecutorCompletionService<Integer>(exec2);
 		for(int i=0;i<10;i++){
 			completionService.submit(new Callable<Integer>(){
 				@Override
