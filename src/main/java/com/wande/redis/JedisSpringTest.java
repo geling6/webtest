@@ -1,4 +1,4 @@
-package com.wanda.redis;
+package com.wande.redis;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

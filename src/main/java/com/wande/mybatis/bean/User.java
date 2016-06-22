@@ -1,4 +1,4 @@
-package com.wanda.mybatis.bean;
+package com.wande.mybatis.bean;
 
 import java.util.Date;
 

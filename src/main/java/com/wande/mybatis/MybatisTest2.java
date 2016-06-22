@@ -1,4 +1,4 @@
-package com.wanda.mybatis;
+package com.wande.mybatis;
 
 import java.io.InputStream;
 
@@ -7,8 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.wanda.mybatis.bean.User;
-import com.wanda.mybatis.dao.UserMapper;
+import com.wande.mybatis.bean.User;
+import com.wande.mybatis.dao.UserMapper;
 
 public class MybatisTest2 {
 

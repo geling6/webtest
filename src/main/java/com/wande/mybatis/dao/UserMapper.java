@@ -1,4 +1,4 @@
-package com.wanda.mybatis.dao;
+package com.wande.mybatis.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.wanda.mybatis.bean.User;
+import com.wande.mybatis.bean.User;
 
 public interface UserMapper {
 	

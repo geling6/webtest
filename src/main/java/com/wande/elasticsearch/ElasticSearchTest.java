@@ -1,11 +1,11 @@
-package com.wanda.elasticsearch;
+package com.wande.elasticsearch;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpMethod;
 
-import com.wanda.utils.SendUtil;
+import com.wande.utils.SendUtil;
 
 public class ElasticSearchTest {
 

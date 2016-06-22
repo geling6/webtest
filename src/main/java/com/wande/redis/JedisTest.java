@@ -1,4 +1,4 @@
-package com.wanda.redis;
+package com.wande.redis;
 
 import java.util.HashSet;
 import java.util.Set;

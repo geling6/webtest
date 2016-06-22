@@ -1,4 +1,4 @@
-package com.wanda.web.interceptor;
+package com.wande.web.interceptor;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Aspect
 public class ParamInterceptor {
 
-	@Before("execution(public Object com.wanda.controller.AOPController.aopTest(..))")
+	@Before("execution(public Object com.wanda.web.controller.AOPController.aopTest(..))")
 	public void beforeMethod(JoinPoint joinPoint)throws Exception{
 		Object[] args = joinPoint.getArgs();
 		ObjectMapper mapper = new ObjectMapper();

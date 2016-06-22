@@ -1,4 +1,4 @@
-package com.wanda.web.bean;
+package com.wande.web.bean;
 
 public class User {
 	private Integer id;

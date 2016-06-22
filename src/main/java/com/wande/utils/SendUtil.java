@@ -1,4 +1,4 @@
-package com.wanda.utils;
+package com.wande.utils;
 
 import java.util.Iterator;
 import java.util.Map;
