@@ -1,6 +1,7 @@
 package com.wande.kafka;
 
 import java.util.Properties;
+import java.util.Random;
 
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
@@ -15,14 +16,21 @@ public class KafkaProducer {
 		
 		Properties props = new Properties();
 		//props.put("zk.connect", "192.168.20.129:2181");
-        props.put("metadata.broker.list", "10.213.57.156:10001");
+        props.put("metadata.broker.list", "192.168.20.129:9092");
         props.put("serializer.class", "kafka.serializer.StringEncoder");
         props.put("request.required.acks", "-1");
 		
 		
 		Producer<Integer,String> producer = new Producer<>(new ProducerConfig(props));
-		producer.send(new KeyedMessage<Integer,String>("cda-contract-qingjs","cccchui3"));
-		
+		Random random = new Random(47);
+		for(int i=0;i<10;i++){
+			StringBuffer sb = new StringBuffer();
+			for(int j=0;j<10;j++){
+				int num = random.nextInt(26);
+				sb.append((char)('a' + num));
+			}
+			producer.send(new KeyedMessage<Integer,String>("fuckdi",sb.toString()));
+		}		
 	}
 
 }
