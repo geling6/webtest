@@ -16,14 +16,15 @@ public class KafkaConsumer {
 		Properties props = new Properties();
 		props.put("zookeeper.connect", "192.168.20.131:2181");
 		props.put("group.id", "group2");
+		props.put("auto.offset.reset", "smallest");//配置是否取全部消息
 		
 		ConsumerConfig consumerConfig = new ConsumerConfig(props);
 		ConsumerConnector consumerConnector = Consumer.createJavaConsumerConnector(consumerConfig);
 		
 		Map<String,Integer> map = new HashMap<>();
-		map.put("fuckdi", 1);
+		map.put("fuck", 1);
 		Map<String,List<KafkaStream<byte[],byte[]>>> messageStreams = consumerConnector.createMessageStreams(map);
-		KafkaStream<byte[],byte[]> messageStream = messageStreams.get("fuckdi").get(0);
+		KafkaStream<byte[],byte[]> messageStream = messageStreams.get("fuck").get(0);
 		ConsumerIterator<byte[],byte[]> iterator = messageStream.iterator();
 		while(iterator.hasNext()){
             String message = new String(iterator.next().message());  

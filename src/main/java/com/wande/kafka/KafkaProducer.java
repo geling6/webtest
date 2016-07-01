@@ -29,7 +29,7 @@ public class KafkaProducer {
 				int num = random.nextInt(26);
 				sb.append((char)('a' + num));
 			}
-			producer.send(new KeyedMessage<Integer,String>("fuckdi",sb.toString()));
+			producer.send(new KeyedMessage<Integer,String>("fuck",sb.toString()));
 		}		
 	}
 
