@@ -16,6 +16,7 @@ public class ThreadLocalTest {
 			}
 		},"线程1").start();
 		
+		
 		new Thread(new Runnable(){
 			@Override
 			public void run() {
