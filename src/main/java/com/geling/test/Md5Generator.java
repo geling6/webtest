@@ -8,6 +8,7 @@ public class Md5Generator {
 		List<Integer> list = null;
 		for(Integer i : list){
 			System.out.println("fuck");
+			System.out.println("yanlijuan");
 		}
 	}
 }
