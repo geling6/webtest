@@ -3,6 +3,7 @@ package com.wande.web.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,11 +12,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wande.web.bean.User;
+import com.wande.web.service.AopService;
 
 @Controller
 @RequestMapping(value = "/aop")
 public class AOPController {
 	Logger logger = Logger.getLogger(AOPController.class);
+	
+	@Autowired
+	private AopService aopService;
+	
 	@RequestMapping(value = "/user",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public Object aopTest(@RequestBody User param) throws Exception{
@@ -37,6 +43,9 @@ public class AOPController {
 		logger.info("fuck info");
 		logger.warn("fuck warn");
 		logger.error("fuck error");
+		
+		aopService.MutilThreadMap();
+		
 		return "fuck";
 	}
 }
