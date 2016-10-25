@@ -65,6 +65,24 @@ public class AopService {
 			};
 		}.start();
 		
+		new Thread("threadg"){
+			@Override
+			public void run() {
+				for(int i=0;i<100;i++){
+					System.out.println(map.get("threadb" + i));
+				}
+			};
+		}.start();
+		
+		new Thread("threadh"){
+			@Override
+			public void run() {
+				for(int i=0;i<100;i++){
+					System.out.println(map.get("threadc" + i));
+				}
+			};
+		}.start();
+		
 		System.out.println(map.size());
 		//System.out.println(map);
 	}
