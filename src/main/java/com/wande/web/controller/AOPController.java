@@ -1,5 +1,9 @@
 package com.wande.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,12 +12,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wande.web.bean.User;
+import com.wande.web.service.AopService;
 
 @Controller
-@RequestMapping(value = "/aop",method = RequestMethod.POST)
+@RequestMapping(value = "/aop")
 public class AOPController {
+	Logger logger = Logger.getLogger(AOPController.class);
 	
-	@RequestMapping(value = "/user",produces = "application/json;charset=UTF-8")
+	@Autowired
+	private AopService aopService;
+	
+	@RequestMapping(value = "/user",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public Object aopTest(@RequestBody User param) throws Exception{
 		ObjectMapper mapper = new ObjectMapper(); 
@@ -25,5 +34,18 @@ public class AOPController {
 		user.setPassword("123456");
 		String json = mapper.writeValueAsString(user);
 		return json;
+	}
+	
+	@RequestMapping(value="/log")
+	@ResponseBody
+	public Object logTest(HttpServletRequest request){
+		logger.debug("fuck debug");
+		logger.info("fuck info");
+		logger.warn("fuck warn");
+		logger.error("fuck error");
+		
+		aopService.MutilThreadMap();
+		
+		return "fuck";
 	}
 }
