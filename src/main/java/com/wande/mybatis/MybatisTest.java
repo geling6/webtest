@@ -22,7 +22,7 @@ public class MybatisTest {
 		try {
 			UserMapper mapper = session.getMapper(UserMapper.class);
 			
-		   /* User user = (User) session.selectOne("com.wanda.mybatis.dao.UserMapper.selectById", 129);
+		   /* User user = (User) session.selectOne("com.wande.mybatis.dao.UserMapper.selectById", 129);
 		    System.out.println(user.getAccount());*/
 		    
 		    /*User user = mapper.selectById(128);

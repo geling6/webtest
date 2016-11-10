@@ -1,4 +1,4 @@
-package com.wanda.controller;
+package com.wande.controller;
 
 import java.util.HashMap;
 import java.util.Map;
