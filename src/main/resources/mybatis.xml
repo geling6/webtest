@@ -12,7 +12,7 @@
   </properties>
   <!-- 别名 -->
   <typeAliases>
-    <package name="com.wanda.mybatis.bean"/>
+    <package name="com.wande.mybatis.bean"/>
   </typeAliases>
   <environments default="development">
     <environment id="development">
@@ -26,6 +26,6 @@
     </environment>
   </environments>
   <mappers>
-    <mapper resource="com/wanda/mybatis/mapper/UserMapper.xml"/>
+    <mapper resource="com/wande/mybatis/mapper/UserMapper.xml"/>
   </mappers>
 </configuration>
