@@ -16,7 +16,7 @@
     <!-- datasource数据源 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
-        <property name="jdbcUrl" value="jdbc:mysql://192.168.20.130:3306:/biz?characterEncoding=utf-8"></property>
+        <property name="jdbcUrl" value="jdbc:mysql://192.168.20.130:3306/biz?characterEncoding=utf-8"></property>
         <property name="user" value="root"></property>
         <property name="password" value="mysql"></property>
         <property name="minPoolSize" value="10"></property>

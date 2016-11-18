@@ -1,5 +1,8 @@
 package com.wande.web.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +19,7 @@ public class MemcacheService {
 		System.out.println("rootLogger: " + logger.getRootLogger());
 		System.out.println("all appender: " + logger.getAllAppenders());
 		logger.debug("debug.............");
+		List<String> list = new ArrayList<String>();
+		logger.info("class loading : " + list.getClass().getClassLoader());
 	}
 }
