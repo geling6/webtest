@@ -1,16 +1,15 @@
 package com.geling.test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Test {
 
 	public static void main(String[] args) {
-		MapThread thread = new MapThread();
-		System.out.println(thread.getClass().getClassLoader());
+		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+		map.put(33, 22);
 		
-		List<String> list = new ArrayList<String>();
-		System.out.println(list.getClass().getClassLoader());
+		System.out.println(map);
 	}
 
 }
