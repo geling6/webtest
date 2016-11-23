@@ -1,4 +1,4 @@
-package com.geling.designpattern;
+package com.geling.designpattern.proxy;
 
 /*
  * 代理模式。

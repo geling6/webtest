@@ -1,15 +1,23 @@
 package com.geling.test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Test {
-
+public class Test{
 	public static void main(String[] args) {
-		Map<Integer,Integer> map = new HashMap<Integer,Integer>();
-		map.put(33, 22);
+		List<Integer> aa = new LinkedList<>();
+		aa.add(1);
+		aa.add(2);
+		aa.add(3);
+		aa.add(4);
+		aa.add(5);
+		aa.add(6);
+		aa.add(7);
+		aa.add(8);
+		aa.add(9);
+		aa.add(10);
+		aa.add(11);
 		
-		System.out.println(map);
+		aa.get(4);
 	}
-
 }

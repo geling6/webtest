@@ -22,9 +22,9 @@ public class MybatisTest2 {
 			User user = new User();
 			user.setAccount("tongleiyan");
 			user.setUserName("仝磊燕");
-			user.setPassword("fucktongleiyan");
+			user.setPassword("tongleiyan");
 			user.setStatus(2);
-			user.setEmail("tongleiyan@fuck.com");
+			user.setEmail("tongleiyan@fk.com");
 			UserMapper userMapper = session.getMapper(UserMapper.class);
 			
 			int count = userMapper.insertUser(user);

@@ -1,4 +1,4 @@
-package com.geling.designpattern;
+package com.geling.designpattern.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

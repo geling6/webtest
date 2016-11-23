@@ -17,5 +17,5 @@
     <mvc:annotation-driven></mvc:annotation-driven>
     <aop:aspectj-autoproxy/>
     <import resource="spring-redis.xml"/>
-    <import resource="spring-mybatis.xml"/>
+    <!-- <import resource="spring-mybatis.xml"/> -->
 </beans>
