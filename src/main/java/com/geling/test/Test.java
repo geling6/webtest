@@ -1,11 +1,12 @@
 package com.geling.test;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Test{
 	public static void main(String[] args) {
-		List<Integer> aa = new LinkedList<>();
+		List<Integer> aa = new ArrayList<>();
 		aa.add(1);
 		aa.add(2);
 		aa.add(3);
@@ -17,7 +18,11 @@ public class Test{
 		aa.add(9);
 		aa.add(10);
 		aa.add(11);
-		
-		aa.get(4);
+		Iterator<Integer> iterator = aa.iterator();
+		aa.add(99);
+		while(iterator.hasNext()){
+			System.out.println(iterator.next());
+		}
+		System.out.println(aa);
 	}
 }

@@ -1,0 +1,527 @@
+1  #!/bin/sh
+2  # install - install a program, script, or datafile
+3  
+4  scriptversion=2011-11-20.07; # UTC
+5  
+6  # This originates from X11R5 (mit/util/scripts/install.sh), which was
+7  # later released in X11R6 (xc/config/util/install.sh) with the
+8  # following copyright and license.
+9  #
+10 # Copyright (C) 1994 X Consortium
+11 #
+12 # Permission is hereby granted, free of charge, to any person obtaining a copy
+13 # of this software and associated documentation files (the "Software"), to
+14 # deal in the Software without restriction, including without limitation the
+15 # rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+16 # sell copies of the Software, and to permit persons to whom the Software is
+17 # furnished to do so, subject to the following conditions:
+18 #
+19 # The above copyright notice and this permission notice shall be included in
+20 # all copies or substantial portions of the Software.
+21 #
+22 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+23 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+24 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+25 # X CONSORTIUM BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+26 # AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNEC-
+27 # TION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+28 #
+29 # Except as contained in this notice, the name of the X Consortium shall not
+30 # be used in advertising or otherwise to promote the sale, use or other deal-
+31 # ings in this Software without prior written authorization from the X Consor-
+32 # tium.
+33 #
+34 #
+35 # FSF changes to this file are in the public domain.
+36 #
+37 # Calling this script install-sh is preferred over install.sh, to prevent
+38 # 'make' implicit rules from creating a file called install from it
+39 # when there is no Makefile.
+40 #
+41 # This script is compatible with the BSD install script, but was written
+42 # from scratch.
+43 
+44 nl='
+45 '
+46 IFS=" ""	$nl"
+47 
+48 # set DOITPROG to echo to test this script
+49 
+50 # Don't use :- since 4.3BSD and earlier shells don't like it.
+51 doit=${DOITPROG-}
+52 if test -z "$doit"; then
+53   doit_exec=exec
+54 else
+55   doit_exec=$doit
+56 fi
+57 
+58 # Put in absolute file names if you don't have them in your path;
+59 # or use environment vars.
+60 
+61 chgrpprog=${CHGRPPROG-chgrp}
+62 chmodprog=${CHMODPROG-chmod}
+63 chownprog=${CHOWNPROG-chown}
+64 cmpprog=${CMPPROG-cmp}
+65 cpprog=${CPPROG-cp}
+66 mkdirprog=${MKDIRPROG-mkdir}
+67 mvprog=${MVPROG-mv}
+68 rmprog=${RMPROG-rm}
+69 stripprog=${STRIPPROG-strip}
+70 
+71 posix_glob='?'
+72 initialize_posix_glob='
+73   test "$posix_glob" != "?" || {
+74     if (set -f) 2>/dev/null; then
+75       posix_glob=
+76     else
+77       posix_glob=:
+78     fi
+79   }
+80 '
+81 
+82 posix_mkdir=
+83 
+84 # Desired mode of installed file.
+85 mode=0755
+86 
+87 chgrpcmd=
+88 chmodcmd=$chmodprog
+89 chowncmd=
+90 mvcmd=$mvprog
+91 rmcmd="$rmprog -f"
+92 stripcmd=
+93 
+94 src=
+95 dst=
+96 dir_arg=
+97 dst_arg=
+98 
+99 copy_on_change=false
+100no_target_directory=
+101
+102usage="\
+103Usage: $0 [OPTION]... [-T] SRCFILE DSTFILE
+104   or: $0 [OPTION]... SRCFILES... DIRECTORY
+105   or: $0 [OPTION]... -t DIRECTORY SRCFILES...
+106   or: $0 [OPTION]... -d DIRECTORIES...
+107
+108In the 1st form, copy SRCFILE to DSTFILE.
+109In the 2nd and 3rd, copy all SRCFILES to DIRECTORY.
+110In the 4th, create DIRECTORIES.
+111
+112Options:
+113     --help     display this help and exit.
+114     --version  display version info and exit.
+115
+116  -c            (ignored)
+117  -C            install only if different (preserve the last data modification time)
+118  -d            create directories instead of installing files.
+119  -g GROUP      $chgrpprog installed files to GROUP.
+120  -m MODE       $chmodprog installed files to MODE.
+121  -o USER       $chownprog installed files to USER.
+122  -s            $stripprog installed files.
+123  -t DIRECTORY  install into DIRECTORY.
+124  -T            report an error if DSTFILE is a directory.
+125
+126Environment variables override the default commands:
+127  CHGRPPROG CHMODPROG CHOWNPROG CMPPROG CPPROG MKDIRPROG MVPROG
+128  RMPROG STRIPPROG
+129"
+130
+131while test $# -ne 0; do
+132  case $1 in
+133    -c) ;;
+134
+135    -C) copy_on_change=true;;
+136
+137    -d) dir_arg=true;;
+138
+139    -g) chgrpcmd="$chgrpprog $2"
+140	shift;;
+141
+142    --help) echo "$usage"; exit $?;;
+143
+144    -m) mode=$2
+145	case $mode in
+146	  *' '* | *'	'* | *'
+147'*	  | *'*'* | *'?'* | *'['*)
+148	    echo "$0: invalid mode: $mode" >&2
+149	    exit 1;;
+150	esac
+151	shift;;
+152
+153    -o) chowncmd="$chownprog $2"
+154	shift;;
+155
+156    -s) stripcmd=$stripprog;;
+157
+158    -t) dst_arg=$2
+159	# Protect names problematic for 'test' and other utilities.
+160	case $dst_arg in
+161	  -* | [=\(\)!]) dst_arg=./$dst_arg;;
+162	esac
+163	shift;;
+164
+165    -T) no_target_directory=true;;
+166
+167    --version) echo "$0 $scriptversion"; exit $?;;
+168
+169    --)	shift
+170	break;;
+171
+172    -*)	echo "$0: invalid option: $1" >&2
+173	exit 1;;
+174
+175    *)  break;;
+176  esac
+177  shift
+178done
+179
+180if test $# -ne 0 && test -z "$dir_arg$dst_arg"; then
+181  # When -d is used, all remaining arguments are directories to create.
+182  # When -t is used, the destination is already specified.
+183  # Otherwise, the last argument is the destination.  Remove it from $@.
+184  for arg
+185  do
+186    if test -n "$dst_arg"; then
+187      # $@ is not empty: it contains at least $arg.
+188      set fnord "$@" "$dst_arg"
+189      shift # fnord
+190    fi
+191    shift # arg
+192    dst_arg=$arg
+193    # Protect names problematic for 'test' and other utilities.
+194    case $dst_arg in
+195      -* | [=\(\)!]) dst_arg=./$dst_arg;;
+196    esac
+197  done
+198fi
+199
+200if test $# -eq 0; then
+201  if test -z "$dir_arg"; then
+202    echo "$0: no input file specified." >&2
+203    exit 1
+204  fi
+205  # It's OK to call 'install-sh -d' without argument.
+206  # This can happen when creating conditional directories.
+207  exit 0
+208fi
+209
+210if test -z "$dir_arg"; then
+211  do_exit='(exit $ret); exit $ret'
+212  trap "ret=129; $do_exit" 1
+213  trap "ret=130; $do_exit" 2
+214  trap "ret=141; $do_exit" 13
+215  trap "ret=143; $do_exit" 15
+216
+217  # Set umask so as not to create temps with too-generous modes.
+218  # However, 'strip' requires both read and write access to temps.
+219  case $mode in
+220    # Optimize common cases.
+221    *644) cp_umask=133;;
+222    *755) cp_umask=22;;
+223
+224    *[0-7])
+225      if test -z "$stripcmd"; then
+226	u_plus_rw=
+227      else
+228	u_plus_rw='% 200'
+229      fi
+230      cp_umask=`expr '(' 777 - $mode % 1000 ')' $u_plus_rw`;;
+231    *)
+232      if test -z "$stripcmd"; then
+233	u_plus_rw=
+234      else
+235	u_plus_rw=,u+rw
+236      fi
+237      cp_umask=$mode$u_plus_rw;;
+238  esac
+239fi
+240
+241for src
+242do
+243  # Protect names problematic for 'test' and other utilities.
+244  case $src in
+245    -* | [=\(\)!]) src=./$src;;
+246  esac
+247
+248  if test -n "$dir_arg"; then
+249    dst=$src
+250    dstdir=$dst
+251    test -d "$dstdir"
+252    dstdir_status=$?
+253  else
+254
+255    # Waiting for this to be detected by the "$cpprog $src $dsttmp" command
+256    # might cause directories to be created, which would be especially bad
+257    # if $src (and thus $dsttmp) contains '*'.
+258    if test ! -f "$src" && test ! -d "$src"; then
+259      echo "$0: $src does not exist." >&2
+260      exit 1
+261    fi
+262
+263    if test -z "$dst_arg"; then
+264      echo "$0: no destination specified." >&2
+265      exit 1
+266    fi
+267    dst=$dst_arg
+268
+269    # If destination is a directory, append the input filename; won't work
+270    # if double slashes aren't ignored.
+271    if test -d "$dst"; then
+272      if test -n "$no_target_directory"; then
+273	echo "$0: $dst_arg: Is a directory" >&2
+274	exit 1
+275      fi
+276      dstdir=$dst
+277      dst=$dstdir/`basename "$src"`
+278      dstdir_status=0
+279    else
+280      # Prefer dirname, but fall back on a substitute if dirname fails.
+281      dstdir=`
+282	(dirname "$dst") 2>/dev/null ||
+283	expr X"$dst" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
+284	     X"$dst" : 'X\(//\)[^/]' \| \
+285	     X"$dst" : 'X\(//\)$' \| \
+286	     X"$dst" : 'X\(/\)' \| . 2>/dev/null ||
+287	echo X"$dst" |
+288	    sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{
+289		   s//\1/
+290		   q
+291		 }
+292		 /^X\(\/\/\)[^/].*/{
+293		   s//\1/
+294		   q
+295		 }
+296		 /^X\(\/\/\)$/{
+297		   s//\1/
+298		   q
+299		 }
+300		 /^X\(\/\).*/{
+301		   s//\1/
+302		   q
+303		 }
+304		 s/.*/./; q'
+305      `
+306
+307      test -d "$dstdir"
+308      dstdir_status=$?
+309    fi
+310  fi
+311
+312  obsolete_mkdir_used=false
+313
+314  if test $dstdir_status != 0; then
+315    case $posix_mkdir in
+316      '')
+317	# Create intermediate dirs using mode 755 as modified by the umask.
+318	# This is like FreeBSD 'install' as of 1997-10-28.
+319	umask=`umask`
+320	case $stripcmd.$umask in
+321	  # Optimize common cases.
+322	  *[2367][2367]) mkdir_umask=$umask;;
+323	  .*0[02][02] | .[02][02] | .[02]) mkdir_umask=22;;
+324
+325	  *[0-7])
+326	    mkdir_umask=`expr $umask + 22 \
+327	      - $umask % 100 % 40 + $umask % 20 \
+328	      - $umask % 10 % 4 + $umask % 2
+329	    `;;
+330	  *) mkdir_umask=$umask,go-w;;
+331	esac
+332
+333	# With -d, create the new directory with the user-specified mode.
+334	# Otherwise, rely on $mkdir_umask.
+335	if test -n "$dir_arg"; then
+336	  mkdir_mode=-m$mode
+337	else
+338	  mkdir_mode=
+339	fi
+340
+341	posix_mkdir=false
+342	case $umask in
+343	  *[123567][0-7][0-7])
+344	    # POSIX mkdir -p sets u+wx bits regardless of umask, which
+345	    # is incompatible with FreeBSD 'install' when (umask & 300) != 0.
+346	    ;;
+347	  *)
+348	    tmpdir=${TMPDIR-/tmp}/ins$RANDOM-$$
+349	    trap 'ret=$?; rmdir "$tmpdir/d" "$tmpdir" 2>/dev/null; exit $ret' 0
+350
+351	    if (umask $mkdir_umask &&
+352		exec $mkdirprog $mkdir_mode -p -- "$tmpdir/d") >/dev/null 2>&1
+353	    then
+354	      if test -z "$dir_arg" || {
+355		   # Check for POSIX incompatibilities with -m.
+356		   # HP-UX 11.23 and IRIX 6.5 mkdir -m -p sets group- or
+357		   # other-writable bit of parent directory when it shouldn't.
+358		   # FreeBSD 6.1 mkdir -m -p sets mode of existing directory.
+359		   ls_ld_tmpdir=`ls -ld "$tmpdir"`
+360		   case $ls_ld_tmpdir in
+361		     d????-?r-*) different_mode=700;;
+362		     d????-?--*) different_mode=755;;
+363		     *) false;;
+364		   esac &&
+365		   $mkdirprog -m$different_mode -p -- "$tmpdir" && {
+366		     ls_ld_tmpdir_1=`ls -ld "$tmpdir"`
+367		     test "$ls_ld_tmpdir" = "$ls_ld_tmpdir_1"
+368		   }
+369		 }
+370	      then posix_mkdir=:
+371	      fi
+372	      rmdir "$tmpdir/d" "$tmpdir"
+373	    else
+374	      # Remove any dirs left behind by ancient mkdir implementations.
+375	      rmdir ./$mkdir_mode ./-p ./-- 2>/dev/null
+376	    fi
+377	    trap '' 0;;
+378	esac;;
+379    esac
+380
+381    if
+382      $posix_mkdir && (
+383	umask $mkdir_umask &&
+384	$doit_exec $mkdirprog $mkdir_mode -p -- "$dstdir"
+385      )
+386    then :
+387    else
+388
+389      # The umask is ridiculous, or mkdir does not conform to POSIX,
+390      # or it failed possibly due to a race condition.  Create the
+391      # directory the slow way, step by step, checking for races as we go.
+392
+393      case $dstdir in
+394	/*) prefix='/';;
+395	[-=\(\)!]*) prefix='./';;
+396	*)  prefix='';;
+397      esac
+398
+399      eval "$initialize_posix_glob"
+400
+401      oIFS=$IFS
+402      IFS=/
+403      $posix_glob set -f
+404      set fnord $dstdir
+405      shift
+406      $posix_glob set +f
+407      IFS=$oIFS
+408
+409      prefixes=
+410
+411      for d
+412      do
+413	test X"$d" = X && continue
+414
+415	prefix=$prefix$d
+416	if test -d "$prefix"; then
+417	  prefixes=
+418	else
+419	  if $posix_mkdir; then
+420	    (umask=$mkdir_umask &&
+421	     $doit_exec $mkdirprog $mkdir_mode -p -- "$dstdir") && break
+422	    # Don't fail if two instances are running concurrently.
+423	    test -d "$prefix" || exit 1
+424	  else
+425	    case $prefix in
+426	      *\'*) qprefix=`echo "$prefix" | sed "s/'/'\\\\\\\\''/g"`;;
+427	      *) qprefix=$prefix;;
+428	    esac
+429	    prefixes="$prefixes '$qprefix'"
+430	  fi
+431	fi
+432	prefix=$prefix/
+433      done
+434
+435      if test -n "$prefixes"; then
+436	# Don't fail if two instances are running concurrently.
+437	(umask $mkdir_umask &&
+438	 eval "\$doit_exec \$mkdirprog $prefixes") ||
+439	  test -d "$dstdir" || exit 1
+440	obsolete_mkdir_used=true
+441      fi
+442    fi
+443  fi
+444
+445  if test -n "$dir_arg"; then
+446    { test -z "$chowncmd" || $doit $chowncmd "$dst"; } &&
+447    { test -z "$chgrpcmd" || $doit $chgrpcmd "$dst"; } &&
+448    { test "$obsolete_mkdir_used$chowncmd$chgrpcmd" = false ||
+449      test -z "$chmodcmd" || $doit $chmodcmd $mode "$dst"; } || exit 1
+450  else
+451
+452    # Make a couple of temp file names in the proper directory.
+453    dsttmp=$dstdir/_inst.$$_
+454    rmtmp=$dstdir/_rm.$$_
+455
+456    # Trap to clean up those temp files at exit.
+457    trap 'ret=$?; rm -f "$dsttmp" "$rmtmp" && exit $ret' 0
+458
+459    # Copy the file name to the temp name.
+460    (umask $cp_umask && $doit_exec $cpprog "$src" "$dsttmp") &&
+461
+462    # and set any options; do chmod last to preserve setuid bits.
+463    #
+464    # If any of these fail, we abort the whole thing.  If we want to
+465    # ignore errors from any of these, just make sure not to ignore
+466    # errors from the above "$doit $cpprog $src $dsttmp" command.
+467    #
+468    { test -z "$chowncmd" || $doit $chowncmd "$dsttmp"; } &&
+469    { test -z "$chgrpcmd" || $doit $chgrpcmd "$dsttmp"; } &&
+470    { test -z "$stripcmd" || $doit $stripcmd "$dsttmp"; } &&
+471    { test -z "$chmodcmd" || $doit $chmodcmd $mode "$dsttmp"; } &&
+472
+473    # If -C, don't bother to copy if it wouldn't change the file.
+474    if $copy_on_change &&
+475       old=`LC_ALL=C ls -dlL "$dst"	2>/dev/null` &&
+476       new=`LC_ALL=C ls -dlL "$dsttmp"	2>/dev/null` &&
+477
+478       eval "$initialize_posix_glob" &&
+479       $posix_glob set -f &&
+480       set X $old && old=:$2:$4:$5:$6 &&
+481       set X $new && new=:$2:$4:$5:$6 &&
+482       $posix_glob set +f &&
+483
+484       test "$old" = "$new" &&
+485       $cmpprog "$dst" "$dsttmp" >/dev/null 2>&1
+486    then
+487      rm -f "$dsttmp"
+488    else
+489      # Rename the file to the real destination.
+490      $doit $mvcmd -f "$dsttmp" "$dst" 2>/dev/null ||
+491
+492      # The rename failed, perhaps because mv can't rename something else
+493      # to itself, or perhaps because mv is so ancient that it does not
+494      # support -f.
+495      {
+496	# Now remove or move aside any old file at destination location.
+497	# We try this two ways since rm can't unlink itself on some
+498	# systems and the destination file might be busy for other
+499	# reasons.  In this case, the final cleanup might fail but the new
+500	# file should still install successfully.
+501	{
+502	  test ! -f "$dst" ||
+503	  $doit $rmcmd -f "$dst" 2>/dev/null ||
+504	  { $doit $mvcmd -f "$dst" "$rmtmp" 2>/dev/null &&
+505	    { $doit $rmcmd -f "$rmtmp" 2>/dev/null; :; }
+506	  } ||
+507	  { echo "$0: cannot unlink or rename $dst" >&2
+508	    (exit 1); exit 1
+509	  }
+510	} &&
+511
+512	# Now rename the file to the real destination.
+513	$doit $mvcmd "$dsttmp" "$dst"
+514      }
+515    fi || exit 1
+516
+517    trap '' 0
+518  fi
+519done
+520
+521# Local variables:
+522# eval: (add-hook 'write-file-hooks 'time-stamp)
+523# time-stamp-start: "scriptversion="
+524# time-stamp-format: "%:y-%02m-%02d.%02H"
+525# time-stamp-time-zone: "UTC"
+526# time-stamp-end: "; # UTC"
+527# End:
