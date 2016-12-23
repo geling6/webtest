@@ -23,7 +23,7 @@ public class SqList<T> {
 	}
 	//判空
 	public boolean isEmpty(){
-		return false;
+		return list == null;
 	}
 	//获取指定位置元素
 	public T get(int i){
