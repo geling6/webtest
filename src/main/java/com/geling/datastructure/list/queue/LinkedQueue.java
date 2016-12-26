@@ -13,7 +13,7 @@ public class LinkedQueue<T> {
 		
 	}
 	//销毁
-	public void desctoryQueue(){
+	public void destroyQueue(){
 		qNode = null;
 		front = null;
 		rear = null;
@@ -42,7 +42,7 @@ public class LinkedQueue<T> {
 		return front.next.data;
 	}
 	//入队
-	public void enQuequ(T e){
+	public void enQueue(T e){
 		QNode<T> p = new QNode<>();
 		p.data = e;
 		rear.next = p;
