@@ -9,6 +9,25 @@ public class BiTree<T> {
 	public void createBiTree(BiTNode<T> nodes){
 		root = nodes;
 	}
+	//递归前序便利
+	private void preOrderRecurse(BiTNode<T> root){
+		//1.访问根结点
+		if(root != null){
+			System.out.print(root.data + ", ");
+		}
+		//2.访问左子树
+		if(root.lchild != null){
+			preOrderRecurse(root.lchild);
+		}
+		//3.访问右子树
+		if(root.rchild != null){
+			preOrderRecurse(root.rchild);
+		}
+	}
+	public void preOrderTraverseRecurse(){
+		preOrderRecurse(root);
+	}
+	
 	//前序遍历
 	public void preOrderTraverse(){
 		SqStack<BiTNode<T>> stack = new SqStack<>();
@@ -26,6 +45,23 @@ public class BiTree<T> {
 			}
 		}
 		
+	}
+	
+	
+	//递归中序遍历
+	private void inOrderRecurse(BiTNode<T> root){
+		if(root != null && root.lchild != null){
+			inOrderRecurse(root.lchild);
+		}
+		if(root != null){
+			System.out.print(root.data + ", ");
+		}
+		if(root!=null && root.rchild!=null){
+			inOrderRecurse(root.rchild);
+		}
+	}
+	public void inOrderTraverseRecurse(){
+		inOrderRecurse(root);
 	}
 	//中序遍历
 	public void inOrderTraverse(){
@@ -89,7 +125,9 @@ public class BiTree<T> {
 		BiTree<String> tree = new BiTree<>();
 		tree.createBiTree(node1);
 		
-		tree.inOrderTraverse2();
+		tree.preOrderTraverseRecurse();
+		System.out.println();
+		tree.inOrderTraverseRecurse();
 	}
 }
 class BiTNode<T>{
