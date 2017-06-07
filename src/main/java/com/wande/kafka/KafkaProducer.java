@@ -16,7 +16,7 @@ public class KafkaProducer {
 		
 		Properties props = new Properties();
 		//props.put("zk.connect", "192.168.20.129:2181");
-        props.put("metadata.broker.list", "192.168.20.129:9092");
+        props.put("metadata.broker.list", "10.1.81.26:9092");
         props.put("serializer.class", "kafka.serializer.StringEncoder");
         props.put("request.required.acks", "-1");
 		
@@ -29,7 +29,7 @@ public class KafkaProducer {
 				int num = random.nextInt(26);
 				sb.append((char)('a' + num));
 			}
-			producer.send(new KeyedMessage<Integer,String>("fuck",sb.toString()));
+			producer.send(new KeyedMessage<Integer,String>("cda-store",sb.toString()));
 		}		
 	}
 

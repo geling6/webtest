@@ -25,7 +25,7 @@ public class ElasticSearchTest {
         //builder.put("cluster.name","myelasticsearch");
         client = new TransportClient(builder.build());
         InetSocketTransportAddress [] inetSocketTransportAddresses = new InetSocketTransportAddress[1];
-        inetSocketTransportAddresses[0] = new InetSocketTransportAddress("192.168.20.129", 9300);
+        inetSocketTransportAddresses[0] = new InetSocketTransportAddress("10.1.80.63", 9300);
         //inetSocketTransportAddresses[1] = new InetSocketTransportAddress("192.168.20.131",9300);
         client.addTransportAddresses(inetSocketTransportAddresses);
         

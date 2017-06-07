@@ -24,4 +24,6 @@ public interface UserMapper {
 	int insertUser(User user);
 	
 	int updateUsers(@Param("users")List<User> users);
+	
+	int insertBatch(List<User> list);
 }

@@ -38,19 +38,24 @@ public class MybatisTest {
 			System.out.println(maps);*/
 			
 			User user1 = new User();
-			user1.setId(128);
 			user1.setUserName("王灵灵");
 			user1.setAccount("wanglingb");
+			user1.setPassword("aaaaaa");
+			user1.setEmail("fdfdfdfd");
+			user1.setStatus(1);
 			
 			User user2 = new User();
-			user2.setId(129);
 			user2.setUserName("王倩");
 			user2.setAccount("wangqianb");
+			user2.setPassword("aaaaaa");
+			user2.setEmail("fdfdfdfd");
+			user2.setStatus(2);
 			
 			List<User> users = new ArrayList<User>();
 			users.add(user1);
 			users.add(user2);
-			int count = mapper.updateUsers(users);
+			int count = mapper.insertBatch(users);
+			//int count = mapper.updateUsers(users);
 			System.out.println(count);
 			session.commit();
 		} finally {

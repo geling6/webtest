@@ -98,4 +98,13 @@
         	id=#{i.id}
         </foreach>
   </update>
+  
+  <insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+  	insert into user (account,user_name,password,email,status,create_time,update_time)
+  	value
+  	<foreach collection ="list" item="item" index= "index" separator =",">
+  		(#{item.account},#{item.userName},#{item.password},#{item.email},#{item.status},#{item.createTime},#{item.updateTime})
+  	</foreach>
+  </insert>
+  
 </mapper>

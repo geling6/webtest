@@ -1,11 +1,6 @@
 package com.wande.redis;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import redis.clients.jedis.HostAndPort;
-import redis.clients.jedis.JedisCluster;
-import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.Jedis;
 
 /**
  * @author yangyang
@@ -13,13 +8,13 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 public class JedisTest {
     public static void main(String[] args) {
-        /*Jedis jedis = new Jedis("192.168.203.128");
-        jedis.set("foo", "bar3");
+        Jedis jedis = new Jedis("10.213.57.81");
+        jedis.set("foo", "bar33333");
         String value = jedis.get("foo");
         jedis.close();
-        System.out.println(value);*/
+        System.out.println(value);
         
-        Set<HostAndPort> jedisClusterNodes = new HashSet<HostAndPort>();
+       /* Set<HostAndPort> jedisClusterNodes = new HashSet<HostAndPort>();
         jedisClusterNodes.add(new HostAndPort("192.168.203.131",6379));
         jedisClusterNodes.add(new HostAndPort("192.168.203.130",6379));
         jedisClusterNodes.add(new HostAndPort("192.168.203.128",6379));
@@ -41,6 +36,6 @@ public class JedisTest {
         System.out.println(cluster.get("fuck"));
         System.out.println(cluster.get("ssh"));
         
-        cluster.close();
+        cluster.close();*/
     }
 }
