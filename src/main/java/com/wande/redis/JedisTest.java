@@ -1,26 +1,26 @@
 package com.wande.redis;
 
-import redis.clients.jedis.Jedis;
+import java.util.HashSet;
+import java.util.Set;
+
+import redis.clients.jedis.HostAndPort;
+import redis.clients.jedis.JedisCluster;
+import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * @author yangyang
  * @desc 纯jedis做客户端操作redis集群
  */
 public class JedisTest {
-    public static void main(String[] args) {
-        Jedis jedis = new Jedis("10.213.57.81");
-        jedis.set("foo", "bar33333");
-        String value = jedis.get("foo");
-        jedis.close();
-        System.out.println(value);
+    public static void main(String[] args) throws Exception{
         
-       /* Set<HostAndPort> jedisClusterNodes = new HashSet<HostAndPort>();
-        jedisClusterNodes.add(new HostAndPort("192.168.203.131",6379));
-        jedisClusterNodes.add(new HostAndPort("192.168.203.130",6379));
-        jedisClusterNodes.add(new HostAndPort("192.168.203.128",6379));
-        jedisClusterNodes.add(new HostAndPort("192.168.203.132",6379));
-        jedisClusterNodes.add(new HostAndPort("192.168.203.134",6379));
-        jedisClusterNodes.add(new HostAndPort("192.168.203.135",6379));
+        Set<HostAndPort> jedisClusterNodes = new HashSet<HostAndPort>();
+        jedisClusterNodes.add(new HostAndPort("192.168.163.128",6379));
+        jedisClusterNodes.add(new HostAndPort("192.168.163.129",6379));
+        jedisClusterNodes.add(new HostAndPort("192.168.163.130",6379));
+        jedisClusterNodes.add(new HostAndPort("192.168.163.131",6379));
+        jedisClusterNodes.add(new HostAndPort("192.168.163.132",6379));
+        jedisClusterNodes.add(new HostAndPort("192.168.163.133",6379));
         
         JedisPoolConfig cfg = new JedisPoolConfig();
         cfg.setMaxIdle(10);
@@ -36,6 +36,6 @@ public class JedisTest {
         System.out.println(cluster.get("fuck"));
         System.out.println(cluster.get("ssh"));
         
-        cluster.close();*/
+        cluster.close();
     }
 }
