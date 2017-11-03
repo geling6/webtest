@@ -3,11 +3,9 @@ package com.wande.elasticsearch;
 import java.util.ArrayList;
 
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.index.query.QueryBuilders;
 
 import com.wande.utils.JSONUtil;
 
@@ -35,7 +33,7 @@ public class ElasticSearchTest {
         yangYandi.setId("4");
         yangYandi.setFirst_name("yang");
         yangYandi.setLast_name("yandi");
-        yangYandi.setAbout("qian cao");
+        yangYandi.setAbout("hehe");
         yangYandi.setInterests(new ArrayList<String>());
         //createIndex(client,yangYandi);
         getIndex(client);
