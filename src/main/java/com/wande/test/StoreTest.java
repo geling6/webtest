@@ -49,7 +49,7 @@ public class StoreTest {
 					Integer storeId = Integer.valueOf(storeIds[i]);
 					sb.append(storeId + ",");
 					if(i%count == 0){
-						String url = "http://ppp/cdaservice/sendStoreInKFK?key=142536&storeIds=" + sb;
+						String url = "http://cda.intra.sit.ffan.com/cdaservice/sendStoreInKFK?key=142536&storeIds=" + sb;
 						url = url.substring(0, url.length()-1);
 						SendUtil.sendRequestWithParam(url, null, HttpMethod.GET);
 						sb = new StringBuilder();
@@ -57,7 +57,7 @@ public class StoreTest {
 					}
 				}
 				if(!StringUtils.isEmpty(sb.toString())){
-					String url = "http://ppp/cdaservice/sendStoreInKFK?key=142536&storeIds=" + sb;
+					String url = "http://cda.intra.sit.ffan.com/cdaservice/sendStoreInKFK?key=142536&storeIds=" + sb;
 					SendUtil.sendRequestWithParam(url, null, HttpMethod.GET);
 					sb = null;
 				}
@@ -80,9 +80,9 @@ public class StoreTest {
 				String[] storeIds = line.split(",");
 				for(int i=0;i<storeIds.length;i++){
 					Integer storeId = Integer.valueOf(storeIds[i]);
-					String url = "http://ppp/cdaservice/cache?key=142536&action=delete&cacheKey=STORE_" + storeId;
+					String url = "http://cda.intra.sit.ffan.com/cdaservice/cache?key=142536&action=delete&cacheKey=STORE_" + storeId;
 					SendUtil.sendRequestWithParam(url, null, HttpMethod.GET);
-					String url2 = "http://ppp/cdaservice/cache?key=142536&action=delete&cacheKey=STORE_VO_LUA_" + storeId;
+					String url2 = "http://cda.intra.sit.ffan.com/cdaservice/cache?key=142536&action=delete&cacheKey=STORE_VO_LUA_" + storeId;
 					SendUtil.sendRequestWithParam(url2, null, HttpMethod.GET);
 					TimeUnit.MILLISECONDS.sleep(1500);
 				}
@@ -110,7 +110,7 @@ public class StoreTest {
 					Integer storeId = Integer.valueOf(storeIds[i]);
 					sb.append(storeId + ",");
 					if(i%count == 0){
-						String url = "http://ppp/cdaservice/stores/sync/es?key=142536&ids=" + sb;
+						String url = "http://cda.intra.sit.ffan.com/cdaservice/stores/sync/es?key=142536&ids=" + sb;
 						url = url.substring(0, url.length()-1);
 						SendUtil.sendRequestWithParam(url, null, HttpMethod.GET);
 						sb = new StringBuilder();
@@ -118,7 +118,7 @@ public class StoreTest {
 					}
 				}
 				if(!StringUtils.isEmpty(sb.toString())){
-					String url = "http://ppp/cdaservice/stores/sync/es?key=142536&ids=" + sb;
+					String url = "http://cda.intra.sit.ffan.com/cdaservice/stores/sync/es?key=142536&ids=" + sb;
 					SendUtil.sendRequestWithParam(url, null, HttpMethod.GET);
 					sb = null;
 				}
@@ -145,7 +145,7 @@ public class StoreTest {
 					Integer storeId = Integer.valueOf(storeIds[i]);
 					sb.append(storeId + ",");
 					if(i%count == 0){
-						String url = "http://ppp/cdaservice/changeEventStores?key=142536&storeIds=" + sb;
+						String url = "http://cda.intra.ffan.com/cdaservice/changeEventStores?key=142536&storeIds=" + sb;
 						url = url.substring(0, url.length()-1);
 						SendUtil.sendRequestWithParam(url, null, HttpMethod.GET);
 						sb = new StringBuilder();
@@ -153,7 +153,7 @@ public class StoreTest {
 					}
 				}
 				if(!StringUtils.isEmpty(sb.toString())){
-					String url = "http://ppp/cdaservice/changeEventStores?key=142536&storeIds=" + sb;
+					String url = "http://cda.intra.ffan.com/cdaservice/changeEventStores?key=142536&storeIds=" + sb;
 					SendUtil.sendRequestWithParam(url, null, HttpMethod.GET);
 					sb = null;
 				}
