@@ -1,7 +1,5 @@
 package com.geling.interview;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @author Administrator

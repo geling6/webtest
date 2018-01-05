@@ -1,39 +1,40 @@
 package com.wande.controller;
 
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class Test {
 
 	public static void main(String[] args) {
-		final Loop loop = new Loop();
-		new Thread(new Runnable(){
-			@Override
-			public void run(){
-				loop.loops(10);
-			}
-		}).start();
-		
-		new Thread(new Runnable(){
-			@Override
-			public void run(){
-				loop.loops(20);
-			}
-		}).start();
+		List list1 =new ArrayList();
+		  list1.add("1111");
+		  list1.add("2222");
+		  list1.add("3333");
+		  
+		  List list2 =new ArrayList();
+		  list2.add("3333");
+		  list2.add("4444");
+		  list2.add("5555");
+		  
+		  //并集
+		  //list1.addAll(list2);
+		  //交集
+		  //list1.retainAll(list2);
+		  //差集
+		  list1.removeAll(list2);
+		  
+		  Iterator<String> it=list1.iterator();
+		  while (it.hasNext()) {
+		   System.out.println(it.next());
+		   
+		  }		  
+		 }
+		 
+		 public static void printStr(List list1){
+		  for (int i = 0; i < list1.size(); i++) {
+		   System.out.println(list1.get(i));
+		  }
 	}	
-}
-
-class Loop{
-	ThreadLocal local = new ThreadLocal();
-	public synchronized void loops(int count){
-		for(int i=0;i<count;i++){
-			try{
-				TimeUnit.MILLISECONDS.sleep(1000);
-			}catch(InterruptedException e){
-				e.printStackTrace();
-			}
-			System.out.print(i + " \t");
-		}
-		System.out.println();
-	}
 }

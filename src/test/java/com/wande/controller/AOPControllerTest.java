@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wande.utils.SendUtil;
-import com.wande.web.bean.User;
 
 public class AOPControllerTest {
 
