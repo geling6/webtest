@@ -71,7 +71,7 @@ public class SqList<T> {
 			throw new ArrayIndexOutOfBoundsException("数组越界");
 		}
 		T origin = list[i-1];
-		if(length >= size){
+		if(length >= size){ //存储空间已满
 			@SuppressWarnings("unchecked")
 			T[] temp = (T[])new Object[size += LISTINCREMENT];
 			for(int j=0;j<length;j++){

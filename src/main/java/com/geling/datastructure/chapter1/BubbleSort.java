@@ -1,6 +1,30 @@
 package com.geling.datastructure.chapter1;
 
+import java.util.Arrays;
+
 public class BubbleSort {
+	
+	
+	/**
+	 * 自己理解实现的冒泡
+	 */
+	public void selfBubbleSort(int [] array) {
+		System.out.println(Arrays.toString(array));
+		System.out.println();
+		
+		for(int i=0;i<array.length;i++) {
+			for(int j=i;j<array.length;j++) {
+				if(array[i] > array[j]) {
+					int temp = array[i];
+					array[i] = array[j];
+					array[j] = temp;
+					System.out.println("i=" + i + ",j=" + j + Arrays.toString(array));
+				}
+			}
+		}
+		
+		System.out.println(Arrays.toString(array));
+	}
 
 	public void bubbleSort(int[] array){
 		boolean change = true;
@@ -13,6 +37,7 @@ public class BubbleSort {
 					array[j+1] = temp;
 					change = true;
 				}
+				System.out.println("i=" + i + ",j=" + j + Arrays.toString(array));
 			}
 		}
 	}
@@ -42,21 +67,18 @@ public class BubbleSort {
 					array[j-1] = temp;
 					change = true;
 				}
+				System.out.println("i=" + i + ",j=" + j + Arrays.toString(array));
 			}
 		}
 	}
 	
 	public static void main(String[] args) {
 		int[] array = {49,38,65,97,76,13,27,49};
-		for(int i=0;i<array.length;i++){
-			System.out.print(array[i] + ",");			
-		}
+		System.out.println(Arrays.toString(array));
 		System.out.println();
 		BubbleSort sort = new BubbleSort();
 		sort.bubbleSort2(array);
-		for(int i=0;i<array.length;i++){
-			System.out.print(array[i] + ",");			
-		}
+		System.out.println(Arrays.toString(array));
 	}
 
 }

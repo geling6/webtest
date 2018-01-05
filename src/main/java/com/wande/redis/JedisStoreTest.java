@@ -53,7 +53,8 @@ public class JedisStoreTest {
 		Class<?> storeClass = Class.forName("com.wande.mybatis.bean.Store");
 		Field[] fields = Store.class.getDeclaredFields();
 		
-		int offset = 65200, limit = 100;
+		int offset = 233739, limit = 1000;
+		
 		while(offset <= count) {
 			List<Store> stores = mapper.queryStores(offset, limit);
 			for(Store store : stores) {
@@ -66,6 +67,7 @@ public class JedisStoreTest {
 						Object value = met.invoke(store);
 						if(value != null) {
 							jedis.hsetnx(key, field.getName(), value.toString());
+							jedis.expire(key, 3600);
 						}
 					}					
 				}
