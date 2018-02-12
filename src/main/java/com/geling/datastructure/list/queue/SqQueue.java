@@ -41,7 +41,7 @@ public class SqQueue<T> {
 		if((rear+1)%MAXQSIZE == front) //判满是队尾指针下一个位置就是头了
 			throw new ParamErrorException("队列满");
 		queue[rear] = e;
-		rear = rear++ % MAXQSIZE;
+		rear = ++rear % MAXQSIZE;
 	}
 	//出队
 	public T deQueue(){

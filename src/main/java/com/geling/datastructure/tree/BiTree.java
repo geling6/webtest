@@ -1,5 +1,8 @@
 package com.geling.datastructure.tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import com.geling.datastructure.list.stack.SqStack;
 
 //二叉树
@@ -9,7 +12,7 @@ public class BiTree<T> {
 	public void createBiTree(BiTNode<T> nodes){
 		root = nodes;
 	}
-	//递归前序便利
+	//递归前序遍历
 	private void preOrderRecurse(BiTNode<T> root){
 		//1.访问根结点
 		if(root != null){
@@ -96,6 +99,29 @@ public class BiTree<T> {
 	}
 	//后序遍历
 	public void postOrdereTraverse(){
+	}
+	
+	//按层遍历.使用一个队列，元素入队，出队时它的左右孩子入队
+	public void traverseTree(BiTNode<String> tree){
+		
+		if(tree == null){
+			return;
+		}
+		
+		Queue<BiTNode<String>> queue = new LinkedList<>();
+		queue.add(tree);
+		while(!queue.isEmpty()){
+			BiTNode<String> node = queue.peek();
+			if(node.lchild != null){
+				queue.add(node.lchild);
+			}
+			if(node.rchild != null){
+				queue.add(node.rchild);
+			}
+			System.out.println(node.data);
+			queue.poll();
+		}
+		
 	}
 	public static void main(String[]args){
 		BiTNode<String> node1 = new BiTNode<>("-");

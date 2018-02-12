@@ -7,6 +7,7 @@ package com.geling.interview;
  */
 public class Test1 {
     public static void main(String[] args) throws Exception{
-        System.out.println(System.currentTimeMillis() + 8640);
+        byte i = (byte)-12;
+        System.out.println(-i);
     }
 }

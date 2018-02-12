@@ -4,7 +4,7 @@ public class SqStack<T> {
 	
 	//初始化
 	@SuppressWarnings("unchecked")
-	private T[] stack = (T[]) new Object[100];
+	private T[] stack = (T[]) new Object[10];
 	private int base = 0, top;
 	private int STACK_INIT_SIZE = 100;
 	private int INCREMENT = 10;
@@ -20,6 +20,9 @@ public class SqStack<T> {
 	//判空
 	public boolean isEmpty(){
 		return base == top;
+	}
+	public boolean isNotEmpty(){
+		return !isEmpty();
 	}
 	//获取长度
 	public int length(){

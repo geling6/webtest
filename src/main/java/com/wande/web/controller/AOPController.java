@@ -22,7 +22,7 @@ public class AOPController {
 	@Autowired
 	private AopService aopService;
 	
-	@RequestMapping(value = "/user",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/user",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public Object aopTest(@RequestBody User param) throws Exception{
 		ObjectMapper mapper = new ObjectMapper(); 

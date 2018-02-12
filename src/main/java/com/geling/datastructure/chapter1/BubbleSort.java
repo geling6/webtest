@@ -9,21 +9,21 @@ public class BubbleSort {
 	 * 自己理解实现的冒泡
 	 */
 	public void selfBubbleSort(int [] array) {
-		System.out.println(Arrays.toString(array));
-		System.out.println();
+		//System.out.println(Arrays.toString(array));
+		//System.out.println();
 		
 		for(int i=0;i<array.length;i++) {
-			for(int j=i;j<array.length;j++) {
+			for(int j=i+1;j<array.length;j++) {
 				if(array[i] > array[j]) {
 					int temp = array[i];
 					array[i] = array[j];
 					array[j] = temp;
-					System.out.println("i=" + i + ",j=" + j + Arrays.toString(array));
+					//System.out.println("i=" + i + ",j=" + j + Arrays.toString(array));
 				}
 			}
 		}
 		
-		System.out.println(Arrays.toString(array));
+		//System.out.println(Arrays.toString(array));
 	}
 
 	public void bubbleSort(int[] array){
@@ -77,7 +77,7 @@ public class BubbleSort {
 		System.out.println(Arrays.toString(array));
 		System.out.println();
 		BubbleSort sort = new BubbleSort();
-		sort.bubbleSort2(array);
+		sort.selfBubbleSort(array);
 		System.out.println(Arrays.toString(array));
 	}
 
