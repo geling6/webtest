@@ -5,10 +5,13 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MemcacheService {
 	private static final Logger logger = Logger.getLogger(MemcacheService.class);
+	
+	@Transactional
 	public void testMemcache(){
 		/*MemcacheUtil.memcacheSet("fuck",10,"hui");
 		String value = (String)MemcacheUtil.memcacheGet("fuck");

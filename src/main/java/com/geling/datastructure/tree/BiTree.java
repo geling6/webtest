@@ -102,7 +102,7 @@ public class BiTree<T> {
 	}
 	
 	//按层遍历.使用一个队列，元素入队，出队时它的左右孩子入队
-	public void traverseTree(BiTNode<String> tree){
+	public void traverseTreeLevel(BiTNode<String> tree){
 		
 		if(tree == null){
 			return;
@@ -111,7 +111,7 @@ public class BiTree<T> {
 		Queue<BiTNode<String>> queue = new LinkedList<>();
 		queue.add(tree);
 		while(!queue.isEmpty()){
-			BiTNode<String> node = queue.peek();
+			BiTNode<String> node = queue.poll();
 			if(node.lchild != null){
 				queue.add(node.lchild);
 			}
@@ -119,10 +119,35 @@ public class BiTree<T> {
 				queue.add(node.rchild);
 			}
 			System.out.println(node.data);
-			queue.poll();
 		}
 		
 	}
+	
+	//递归获取树层数
+	public static int deepTree(BiTNode<String> tree){
+		if(tree == null){
+			return 0;
+		}
+		/*if(tree.lchild ==null && tree.rchild ==null){
+			return 1;
+		}*/
+		int lDeep = deepTree(tree.lchild);
+		int rDeep = deepTree(tree.rchild);
+		
+		return lDeep>=rDeep ? lDeep+1 : rDeep+1;
+	}
+	
+	/**
+	 * 					-
+	 * 				  /	  \
+	 * 				 +	   /
+	 * 				/ \	  / \
+	 * 			   a   *  e  f
+	 * 			  	  /	\
+	 * 				 b   -	
+	 *					/ \
+	 *				   c   d
+	 */
 	public static void main(String[]args){
 		BiTNode<String> node1 = new BiTNode<>("-");
 		BiTNode<String> node2 = new BiTNode<>("+");
@@ -153,14 +178,13 @@ public class BiTree<T> {
 		
 		tree.preOrderTraverseRecurse();
 		System.out.println();
-		tree.inOrderTraverseRecurse();
+		tree.traverseTreeLevel(node1);
 	}
 }
 class BiTNode<T>{
 	T data;
 	BiTNode<T> lchild,rchild;
 	public BiTNode(){
-		
 	}
 	public BiTNode(T data){
 		this.data = data;

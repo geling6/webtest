@@ -1,7 +1,7 @@
 package com.wande.redis;
 
 /**
- * @author houxuesong
+ * @author geling
  * @date 2017-12-08 08:53
  * @desc 店铺信息
  */

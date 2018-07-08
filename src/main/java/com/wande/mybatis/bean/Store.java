@@ -91,11 +91,11 @@ public class Store {
     private Integer status;
     
     /**
-     * 门店经纬 by houxuesong
+     * 门店经纬 
      */
     private Double longitude;
     /**
-     * 门店纬度 by houxuesong
+     * 门店纬度 
      */
     private Double latitude;
     

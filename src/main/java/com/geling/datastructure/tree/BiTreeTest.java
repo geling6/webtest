@@ -1,7 +1,7 @@
 package com.geling.datastructure.tree;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import com.geling.datastructure.list.stack.SqStack;
+
 
 public class BiTreeTest {
 
@@ -12,20 +12,38 @@ public class BiTreeTest {
 			return;
 		}
 		
-		Queue<BiTNode<String>> queue = new LinkedList<>();
-		queue.add(tree);
-		while(!queue.isEmpty()){
-			BiTNode<String> node = queue.peek();
-			if(node.lchild != null){
-				queue.add(node.lchild);
+		SqStack<BiTNode<String>> stack = new SqStack<>();
+		stack.push(tree);
+		
+		while(stack.isNotEmpty()){
+			BiTNode<String> p = null;
+			while((p=stack.getElem()) != null){
+				stack.push(p.lchild);
 			}
-			if(node.rchild != null){
-				queue.add(node.rchild);
+			
+			p = stack.pop();
+			
+			if(stack.isNotEmpty()){
+				p = stack.pop();
+				System.out.println(p.data);
+				stack.push(p.rchild);
 			}
-			System.out.println(node.data);
-			queue.poll();
 		}
 		
+		
+	}
+	
+	public static int deepTree(BiTNode<String> tree){
+		if(tree == null){
+			return 0;
+		}
+		/*if(tree.lchild ==null && tree.rchild ==null){
+			return 1;
+		}*/
+		int lDeep = deepTree(tree.lchild);
+		int rDeep = deepTree(tree.rchild);
+		
+		return lDeep>=rDeep ? lDeep+1 : rDeep+1;
 	}
 	
 	public static void main(String[] args) {
@@ -53,8 +71,10 @@ public class BiTreeTest {
 		node9.lchild = node10;
 		node9.rchild = node11;
 		
-		traverseTree(node1);
+		//traverseTree(node1);
 		
+		
+		System.out.println(deepTree(node1));
 	}
 
 }
